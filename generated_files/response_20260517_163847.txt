@@ -1,0 +1,9 @@
+Query: what is graph theory 
+
+Answer: Ollama error: 500
+
+References:
+- ./uploaded_files/Discrete Mathematics.pdf
+- https://en.wikipedia.org/wiki/Graph_theory
+- https://duckduckgo.com/Gallery_of_named_graphs
+- https://duckduckgo.com/Glossary_of_graph_theory

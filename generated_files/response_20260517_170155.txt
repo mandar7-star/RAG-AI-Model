@@ -1,0 +1,7 @@
+Query: what greedy algorithm
+
+Answer: Based on the given context, "Vivekanand Vernekar" is a reference to Handwritten Notes, a platform for posting handwritten notes. The context mentions a specific note uploaded by "GateWallah Parakram C 2024," which is also mentioned in other notes uploaded by other users on the platform. The provided context does not include any specific algorithm or methodology, leaving it up to interpretation.
+
+References:
+- ./uploaded_files/Algorithms.pdf
+- ./uploaded_files/Discrete Mathematics.pdf

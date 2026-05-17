@@ -1,0 +1,10 @@
+Query: what is greedy algorithm
+
+Answer: A greedy algorithm is an optimization algorithm that solves an optimization problem by choosing the locally optimal solution at each step, with the hope of finding a global optimum. It considers exactly one decomposition of the problem and explores nodes in a graph using best-first search.
+
+References:
+- ./uploaded_files/Algorithms.pdf
+- ./uploaded_files/Discrete Mathematics.pdf
+- https://en.wikipedia.org/wiki/Greedy_algorithm
+- https://duckduckgo.com/Best-first_search
+- https://duckduckgo.com/Greedy_algorithm_for_Egyptian_fractions

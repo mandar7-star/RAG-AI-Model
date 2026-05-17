@@ -1,0 +1,7 @@
+Query: what are differnt algorithm
+
+Answer: Based on the provided context, "ALGOROITHMS" refers to a collection of algorithms written by Vivekanand Vernekar. Handwritten notes uploaded below refer to specific topics covered in his course on GateWallah Parakram C 2024, which is also referred to as HiNGlish Weekday. Other notes uploaded on the same topic are also available for reference on the web results provided.
+
+References:
+- ./uploaded_files/Algorithms.pdf
+- ./uploaded_files/Discrete Mathematics.pdf

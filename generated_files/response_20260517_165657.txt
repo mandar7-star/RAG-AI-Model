@@ -1,0 +1,8 @@
+Query: what are differnet algorithm
+
+Answer: Based on the provided context, "Vivekanand Vernekar" is referring to a popular AI assistant in Hindi known for its helpfulness. The given material includes notes uploaded by other users with related topics such as discrete math, mathematical notation, and data structures. The note uploader has also mentioned their weekday's message.
+
+References:
+- ./uploaded_files/Algorithms.pdf
+- ./uploaded_files/Discrete Mathematics.pdf
+- ./uploaded_files/Data Structures.pdf

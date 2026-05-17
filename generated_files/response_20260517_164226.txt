@@ -1,0 +1,10 @@
+Query: what is data structure
+
+Answer: Ollama error: 500
+
+References:
+- ./uploaded_files/Data Structures.pdf
+- ./uploaded_files/Discrete Mathematics.pdf
+- https://en.wikipedia.org/wiki/Data_structure
+- https://duckduckgo.com/Abstract_data_type
+- https://duckduckgo.com/Concurrent_data_structure

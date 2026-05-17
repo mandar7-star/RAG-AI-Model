@@ -1,0 +1,7 @@
+Query: what are greedy algorithm
+
+Answer: Based solely on the provided context, "GateWallah Parakram C 2024" refers to a Handwritten Notes app that is optimized for handwriting and designed specifically for learning purposes. The context also mentions the Weekday "Hiinglish Weekday," which is a day used in Urdu, Hindi, and Persian. Other notes uploaded below are related to Mathematics and provide detailed information on discrete and discrete algorithms, which are important concepts in these subjects.
+
+References:
+- ./uploaded_files/Algorithms.pdf
+- ./uploaded_files/Discrete Mathematics.pdf

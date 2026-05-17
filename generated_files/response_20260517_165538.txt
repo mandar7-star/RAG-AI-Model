@@ -1,0 +1,7 @@
+Query: what are differnet data types 
+
+Answer: Based on the provided context, the question asked is: "What are different data types in computer science?" The answer given is: "Handwritten Notes, GateWallah Parakram C 2024 (HiNGlish Weekday), Discrete, and Handwritten Notes."
+
+References:
+- ./uploaded_files/Data Structures.pdf
+- ./uploaded_files/Discrete Mathematics.pdf

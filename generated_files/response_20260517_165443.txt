@@ -1,0 +1,10 @@
+Query: what is data structure 
+
+Answer: Based solely on the provided context, the question asks about data structures in computer science. Answering based only on the given context, data structures are ways to organize and store data that are usually chosen for efficient access to data due to their specifications regarding data organization, storage format, behavior from a user's perspective, operations (e.g., possible values, operations), and the behavior of these operations. These data structures are designed to be accessed by multiple computing threads on a computer in order to maximize efficiency.
+
+References:
+- ./uploaded_files/Data Structures.pdf
+- ./uploaded_files/Discrete Mathematics.pdf
+- https://en.wikipedia.org/wiki/Data_structure
+- https://duckduckgo.com/Abstract_data_type
+- https://duckduckgo.com/Concurrent_data_structure

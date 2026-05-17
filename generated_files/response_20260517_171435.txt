@@ -1,0 +1,21 @@
+Query: what are differnet data types 
+
+Answer: The provided context does not explicitly mention different data types. However, based on the information available, it seems to be related to computer science and programming.
+
+Commonly used data types include:
+
+- Integers
+- Floating Point Numbers
+- Characters
+- Boolean
+- Strings
+- Arrays
+- Matrices
+- Records
+
+These are some of the most basic and commonly used data types in programming.
+
+References:
+- ./uploaded_files/Data Structures.pdf
+- ./uploaded_files/Discrete Mathematics.pdf
+- ./uploaded_files/Algorithms.pdf
