@@ -1,0 +1,23 @@
+Query: What is INNERJ OIN
+
+Answer: Based on the context, INNER JOIN is used to combine rows from two or more tables based on a matching condition between them. It returns only those records where the specified condition is true in both tables.
+
+In SQL, INNER JOIN works by joining the rows of one table with the identical columns of another table. This ensures that the matched rows are included in the result set and unmatched rows are ignored (or excluded).
+
+The syntax for an INNER JOIN typically looks like this:
+
+```sql
+SELECT *
+FROM Table1
+INNER JOIN Table2 ON Condition;
+```
+
+In your question, it seems like you're referring to "INNER JOIN", but I'm assuming that's not a typo. If so, the correct answer is indeed INNER JOIN.
+
+For example, consider two tables: `Employees` and ` Departments`. An INNER JOIN between these tables would return only those records where an employee works in a specific department.
+
+Source: https://duckduckgo.com/?q=INNER+JOIN+definition
+
+References:
+- Document: ./uploaded_files/SQL Notes.pdf
+- Web: Search results for What is INNERJ OIN - https://duckduckgo.com/?q=What+is+INNERJ+OIN
