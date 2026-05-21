@@ -70,6 +70,16 @@ if st.button("Generate Response") and query:
     if use_web:
         with st.spinner("Searching web..."):
             web_results = web_search.search(query)
+            
+            # Display web results in sidebar for debugging
+            with st.sidebar.expander("Web Search Results", expanded=True):
+                st.write(f"Found {len(web_results)} results")
+                for idx, wr in enumerate(web_results):
+                    st.write(f"**{idx+1}. {wr.get('title', 'No title')}**")
+                    st.write(f"Link: {wr.get('link', 'No link')}")
+                    st.write(f"Snippet: {wr.get('snippet', 'No snippet')[:150]}...")
+                    st.write("---")
+            
             if web_results:
                 context += "\n\n=== Web Search Results ===\n"
                 for r in web_results:
@@ -101,8 +111,10 @@ Answer:"""
     for w in web_results:
         title = w.get('title', 'Web Source')
         link = w.get('link', '')
-        if link and link not in str(web_refs):
+        if link and link != '':
             web_refs.append(f"Web: {title} - {link}")
+        elif title:
+            web_refs.append(f"Web: {title}")
     
     references = doc_refs + web_refs
     output_file = file_gen.generate_response_file(query, answer, references)
