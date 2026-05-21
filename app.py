@@ -55,9 +55,9 @@ def call_ollama(prompt, model="llama3.2:1b"):
         if response.status_code == 200:
             return response.json()['response']
         else:
-            return f"Ollama error: {response.status_code} - {response.text}"
+            return f"Ollama error: {response.status_code}"
     except requests.exceptions.ConnectionError:
-        return "Cannot connect to Ollama. Please run 'ollama serve' in a separate terminal."
+        return "Cannot connect to Ollama. Please run 'ollama serve' in terminal."
     except Exception as e:
         return f"Ollama error: {str(e)}"
 
@@ -71,14 +71,17 @@ if st.button("Generate Response") and query:
         with st.spinner("Searching web..."):
             web_results = web_search.search(query)
             
-            # Display web results in sidebar for debugging
+            # Display web results in sidebar
             with st.sidebar.expander("Web Search Results", expanded=True):
-                st.write(f"Found {len(web_results)} results")
-                for idx, wr in enumerate(web_results):
-                    st.write(f"**{idx+1}. {wr.get('title', 'No title')}**")
-                    st.write(f"Link: {wr.get('link', 'No link')}")
-                    st.write(f"Snippet: {wr.get('snippet', 'No snippet')[:150]}...")
-                    st.write("---")
+                if web_results:
+                    st.write(f"Found {len(web_results)} results for: {query}")
+                    for idx, wr in enumerate(web_results):
+                        st.write(f"**{idx+1}. {wr.get('title', 'No title')}**")
+                        st.write(f"Link: {wr.get('link', 'No link')}")
+                        st.write(f"Snippet: {wr.get('snippet', 'No snippet')[:150]}...")
+                        st.write("---")
+                else:
+                    st.write("No web results found")
             
             if web_results:
                 context += "\n\n=== Web Search Results ===\n"
@@ -87,8 +90,8 @@ if st.button("Generate Response") and query:
                     context += f"Content: {r.get('snippet', '')}\n"
                     context += f"Source: {r.get('link', '')}\n"
     
-    with st.spinner("Generating response with Ollama (llama3.2:1b)..."):
-        prompt = f"""Answer the question based on the context below. Include citations by mentioning the source names.
+    with st.spinner("Generating response with Ollama..."):
+        prompt = f"""Answer the question based on the context below. Cite sources.
 
 Context:
 {context}
@@ -99,22 +102,19 @@ Answer:"""
         
         answer = call_ollama(prompt)
     
-    # Build document references
+    # Build references
     doc_refs = []
     for d in docs:
         source = d.metadata.get("source", "document")
         if source not in doc_refs:
             doc_refs.append(f"Document: {source}")
     
-    # Build web references
     web_refs = []
     for w in web_results:
-        title = w.get('title', 'Web Source')
         link = w.get('link', '')
-        if link and link != '':
+        title = w.get('title', 'Web Source')
+        if link and link.startswith('http'):
             web_refs.append(f"Web: {title} - {link}")
-        elif title:
-            web_refs.append(f"Web: {title}")
     
     references = doc_refs + web_refs
     output_file = file_gen.generate_response_file(query, answer, references)
