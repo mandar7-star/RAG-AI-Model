@@ -1,68 +1,73 @@
 import requests
 import re
-import json
 
 class WebSearcher:
     def search(self, query: str, num_results=3):
         results = []
         try:
-            # Method 1: DuckDuckGo Lite (most reliable for links)
+            # Using DuckDuckGo Lite - simple HTML page with clean links
             url = f"https://lite.duckduckgo.com/lite/?q={query}"
             headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                "Accept": "text/html"
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             }
             response = requests.get(url, headers=headers, timeout=15)
             
-            # Parse the HTML response
+            # Parse the HTML response line by line
             lines = response.text.split('\n')
-            current_result = {}
             
-            for line in lines:
-                # Look for result links
-                if 'http://' in line or 'https://' in line:
-                    link_match = re.search(r'(https?://[^\s"\']+)', line)
+            titles = []
+            links = []
+            snippets = []
+            
+            for i, line in enumerate(lines):
+                # Find links
+                if 'href="http' in line:
+                    link_match = re.search(r'href="([^"]+)"', line)
                     if link_match:
                         link = link_match.group(1)
-                        # Clean up the link
-                        link = link.replace('&amp;', '&')
                         if 'duckduckgo.com' not in link:
-                            current_result['link'] = link
+                            links.append(link)
                 
-                # Look for titles
-                if 'class="result__title"' in line or 'result__a' in line:
+                # Find titles
+                if 'class="result__title"' in line or 'class="result-link"' in line:
                     title_match = re.search(r'>([^<]+)</a>', line)
                     if title_match:
-                        current_result['title'] = title_match.group(1).strip()
+                        titles.append(title_match.group(1).strip())
                 
-                # Look for snippets
+                # Find snippets
                 if 'class="result__snippet"' in line:
                     snippet_match = re.search(r'>([^<]+)</', line)
                     if snippet_match:
-                        current_result['snippet'] = snippet_match.group(1).strip()
-                        # When we have a snippet, save the result
-                        if 'title' in current_result and 'link' in current_result:
-                            results.append(current_result.copy())
-                            current_result = {}
-                        if len(results) >= num_results:
-                            break
+                        snippets.append(snippet_match.group(1).strip())
             
-            # Method 2: If no results, try alternative API
+            # Build results
+            for i in range(min(len(titles), len(links), num_results)):
+                if i < len(titles) and i < len(links):
+                    results.append({
+                        "title": titles[i],
+                        "link": links[i],
+                        "snippet": snippets[i] if i < len(snippets) else ""
+                    })
+            
+            # If no results, try alternative method
             if not results:
                 results = self._search_via_api(query, num_results)
+            
+            # If still no results, return fallback
+            if not results:
+                results = [{
+                    "title": f"Search results for {query}",
+                    "link": f"https://duckduckgo.com/?q={query.replace(' ', '+')}",
+                    "snippet": "Click the link to view search results on DuckDuckGo."
+                }]
                 
         except Exception as e:
             print(f"Web search error: {e}")
-            results = self._search_via_api(query, num_results)
-        
-        # Ensure each result has a valid link
-        for i, result in enumerate(results):
-            if not result.get('link'):
-                result['link'] = f"https://duckduckgo.com/?q={query.replace(' ', '+')}"
-            if not result.get('title'):
-                result['title'] = f"Result {i+1} for {query}"
-            if not result.get('snippet'):
-                result['snippet'] = "Click the link for more information."
+            results = [{
+                "title": f"Search results for {query}",
+                "link": f"https://duckduckgo.com/?q={query.replace(' ', '+')}",
+                "snippet": f"Could not fetch results. Error: {str(e)[:100]}"
+            }]
         
         return results
     
