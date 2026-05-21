@@ -1,0 +1,6 @@
+Query: What is the Objective of This Case Study.
+
+Answer: Ollama error: 404
+
+References:
+- ./uploaded_files/DS Case Study.pdf

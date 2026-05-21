@@ -1,0 +1,6 @@
+Query: What is inner join
+
+Answer: Inner JOIN combines rows from two or more tables based on a matching condition between them, returning only those records where the specified condition is true in both tables.
+
+References:
+- ./uploaded_files/SQL Notes.pdf

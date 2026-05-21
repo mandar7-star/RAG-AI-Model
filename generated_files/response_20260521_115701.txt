@@ -1,0 +1,6 @@
+Query: What is INNER JOIN
+
+Answer: Ollama error: 404
+
+References:
+- ./uploaded_files/SQL Notes.pdf

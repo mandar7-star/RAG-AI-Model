@@ -1,0 +1,6 @@
+Query: What is INNER JOIN
+
+Answer: An INNER JOIN combines rows from two or more tables based on a matching condition between them, returning only the records where that condition is true in both tables. It ignores unmatched rows and is one of the most commonly used types of joins.
+
+References:
+- ./uploaded_files/SQL Notes.pdf

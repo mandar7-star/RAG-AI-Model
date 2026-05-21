@@ -1,0 +1,6 @@
+Query: What is the Objective of this Case Study
+
+Answer: The objective of this case study is to prepare an academic performance dataset of students for analysis using data preprocessing techniques. The raw student data contains missing values, inconsistencies, and outliers that need to be removed before it can be used for analysis or machine learning models.
+
+References:
+- ./uploaded_files/DS Case Study.pdf

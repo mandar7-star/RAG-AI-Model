@@ -1,0 +1,11 @@
+Query: What is JOINS in SQL
+
+Answer: Joins in SQL are used to combine data from two or more tables based on a related column between them. There are four types of joins:
+
+1. INNER JOIN (Returns only matching rows from both tables)
+2. LEFT JOIN (Returns all rows from the left table and matching rows from the right table)
+3. RIGHT JOIN (Returns all rows from the right table and matching rows from the left table)
+4. FULL JOIN (Returns all rows from both tables, including non-matching records)
+
+References:
+- ./uploaded_files/SQL Notes.pdf

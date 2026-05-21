@@ -1,0 +1,28 @@
+Query: What is INNER JOIN
+
+Answer: Based on the context, an INNER JOIN combines rows from two or more tables based on a matching condition between them. It returns only those records where the specified condition is true in both tables.
+
+Here's an example to illustrate this:
+
+Suppose we have two tables: `Orders` and `Customers`.
+
+| OrderID | CustomerID |
+|---------|-----------|
+| 1       | 1         |
+| 2       | 2         |
+| 3       | 3         |
+
+The INNER JOIN of these two tables would return only the rows where there is a matching condition between an order and a customer.
+
+For example:
+
+| OrderID | CustomerID | Product |
+|---------|-----------|---------|
+| 1       | 1         | A       |
+| 1       | 1         | B       |
+| 2       | 2         | C       |
+
+In this example, the INNER JOIN returns only the rows where there is a matching condition between an order and a customer (OrderID = CustomerID).
+
+References:
+- Document: ./uploaded_files/SQL Notes.pdf

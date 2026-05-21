@@ -1,0 +1,31 @@
+Query: What is INNER JOIN
+
+Answer: Based on the context, INNER JOIN combines rows from two or more tables based on a matching condition between them. It returns only those records where the specified condition is true in both tables (1).
+
+To illustrate this, consider an example using the Northwind database, which was used by Microsoft to test SQL queries. The `Salesperson` table and the `Region` table are joined with an INNER JOIN.
+
+```sql
+SELECT *
+FROM Salesperson s
+INNER JOIN Region r ON s.RegionID = r.RegionID;
+```
+
+This query will return only the rows where a salesperson is from a specific region (e.g., North America).
+
+In the context of relational algebra, an INNER JOIN can be represented as:
+
+```math
+( p \* q )^T
+= (
+  p
+\* q
+)^T
+where T is the transitive closure and ^T denotes transposition.
+```
+
+This representation shows how INNER JOIN combines rows from two tables based on a matching condition between them.
+
+It's worth noting that INNER JOIN ignores unmatched rows, as per the key features mentioned in the context.
+
+References:
+- Document: ./uploaded_files/SQL Notes.pdf
