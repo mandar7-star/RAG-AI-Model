@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 import requests
-import json
+import re
 from document_loader import DocumentLoader
 from rag_core import RAGCore
 from multimodal_processor import MultimodalProcessor
@@ -10,7 +10,7 @@ from file_generator import FileGenerator
 from langchain_core.documents import Document
 
 st.set_page_config(page_title="Multimodal RAG System", layout="wide")
-st.title("📚 Advanced Multimodal RAG with Web Search & File Generation")
+st.title("Multimodal RAG System with Web Search and File Generation")
 
 @st.cache_resource
 def init_rag():
@@ -45,25 +45,24 @@ if uploaded_files:
             docs = DocumentLoader.load_text(file_path)
             rag.index_documents(docs)
 
-query = st.text_input("Ask a question (supports document context + live web search)")
+query = st.text_input("Ask a question about your documents")
 use_web = st.checkbox("Include real-time web search", value=True)
 
-def call_ollama(prompt, model="llama3.2"):
+def call_ollama(prompt, model="llama3.2:1b"):
     try:
         response = requests.post('http://localhost:11434/api/generate', 
-            json={'model': model, 'prompt': prompt, 'stream': False}, 
-            timeout=120)  # Increased timeout
+            json={'model': model, 'prompt': prompt, 'stream': False}, timeout=120)
         if response.status_code == 200:
             return response.json()['response']
         else:
             return f"Ollama error: {response.status_code} - {response.text}"
     except requests.exceptions.ConnectionError:
-        return "❌ Cannot connect to Ollama. Make sure 'ollama serve' is running."
+        return "Cannot connect to Ollama. Please run 'ollama serve' in a separate terminal."
     except Exception as e:
-        return f"❌ Error: {str(e)}"
+        return f"Ollama error: {str(e)}"
 
 if st.button("Generate Response") and query:
-    with st.spinner("Retrieving from documents..."):
+    with st.spinner("Searching documents..."):
         docs = rag.retrieve(query)
         context = "\n".join([d.page_content for d in docs])
     
@@ -71,45 +70,56 @@ if st.button("Generate Response") and query:
     if use_web:
         with st.spinner("Searching web..."):
             web_results = web_search.search(query)
-            context += "\n\n[Web Results]\n" + "\n".join([f"{r['title']}: {r['snippet']}" for r in web_results])
+            if web_results:
+                context += "\n\n=== Web Search Results ===\n"
+                for r in web_results:
+                    context += f"\nTitle: {r.get('title', '')}\n"
+                    context += f"Content: {r.get('snippet', '')}\n"
+                    context += f"Source: {r.get('link', '')}\n"
     
-    with st.spinner("Generating response with Ollama..."):
-        prompt = f"""You are a helpful assistant. Answer the question based ONLY on the provided context.
+    with st.spinner("Generating response with Ollama (llama3.2:1b)..."):
+        prompt = f"""Answer the question based on the context below. Include citations by mentioning the source names.
 
 Context:
 {context}
 
 Question: {query}
 
-Answer concisely and accurately:"""
+Answer:"""
         
         answer = call_ollama(prompt)
     
-    # Fix: Deduplicate references and clean web URLs
+    # Build document references
     doc_refs = []
     for d in docs:
         source = d.metadata.get("source", "document")
         if source not in doc_refs:
-            doc_refs.append(source)
+            doc_refs.append(f"Document: {source}")
     
+    # Build web references
     web_refs = []
     for w in web_results:
+        title = w.get('title', 'Web Source')
         link = w.get('link', '')
-        if link and link not in web_refs and not link.startswith('//duckduckgo'):
-            web_refs.append(link)
+        if link and link not in str(web_refs):
+            web_refs.append(f"Web: {title} - {link}")
     
     references = doc_refs + web_refs
-    
     output_file = file_gen.generate_response_file(query, answer, references)
     
     st.subheader("Answer")
     st.write(answer)
-    st.subheader("References")
-    for ref in references[:5]:
-        st.write(f"- {ref}")
-    st.success(f"Response file saved: {output_file}")
     
-    modification = st.text_input("Modify or regenerate response (enter prompt)")
+    st.subheader("References")
+    if references:
+        for ref in references[:10]:
+            st.write(f"- {ref}")
+    else:
+        st.write("No references available")
+    
+    st.success(f"Response saved: {output_file}")
+    
+    modification = st.text_input("Modify response (enter prompt)")
     if st.button("Apply Modification"):
         new_file = file_gen.modify_response(output_file, modification)
         st.info(f"Modified file: {new_file}")
